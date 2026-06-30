@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PortfolioLanguageBridge } from "@/components/providers/PortfolioLanguageBridge";
@@ -20,16 +21,26 @@ export const metadata: Metadata = {
     "Интерактивный интерфейс ветеринарной клиники с ИИ-ассистентом, онлайн-записью и мониторингом здоровья питомца.",
 };
 
-export default function RootLayout({
+const portfolioEmbedScript = `(function(){var p=new URLSearchParams(location.search);if(p.get('embed')==='portfolio'){document.documentElement.setAttribute('data-embed','portfolio');}})();`;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const isPortfolioEmbed = headersList.get("x-portfolio-embed") === "portfolio";
+
   return (
     <html
       lang="ru"
+      {...(isPortfolioEmbed ? { "data-embed": "portfolio" } : {})}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: portfolioEmbedScript }} />
+      </head>
       <body className="min-h-full font-sans">
         <Suspense fallback={null}>
           <PortfolioLanguageBridge>{children}</PortfolioLanguageBridge>

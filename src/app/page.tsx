@@ -18,6 +18,11 @@ export default function Home() {
         <SiteFooter />
         <ToastStack />
         <MobileActionBar />
+        <div
+          id="embed-height-sentinel"
+          aria-hidden="true"
+          style={{ height: 0, width: "100%" }}
+        />
       </main>
     </BentoProvider>
   );

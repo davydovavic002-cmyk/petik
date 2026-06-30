@@ -216,3 +216,35 @@ input:focus-visible {
     @apply cursor-pointer transition-all duration-200 hover:text-[#3D6B4F] hover:underline;
   }
 }
+
+html[data-embed="portfolio"],
+html[data-embed="portfolio"] body {
+  min-height: 0 !important;
+  height: auto !important;
+  overflow-x: clip;
+}
+
+html[data-embed="portfolio"] .min-h-screen,
+html[data-embed="portfolio"] [class*="min-h-screen"],
+html[data-embed="portfolio"] [class*="100vh"] {
+  min-height: auto !important;
+  height: auto !important;
+}
+
+html[data-embed="portfolio"] main {
+  min-height: auto !important;
+}
+
+html[data-embed="portfolio"] .scroll-progress {
+  display: none;
+}
+
+html[data-embed="portfolio"] .mobile-action-bar {
+  position: static !important;
+  inset: auto !important;
+  margin: 0 1rem 1rem;
+}
+
+html[data-embed="portfolio"] footer {
+  padding-bottom: 1.5rem !important;
+}

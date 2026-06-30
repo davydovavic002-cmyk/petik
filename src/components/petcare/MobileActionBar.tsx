@@ -32,7 +32,7 @@ export function MobileActionBar() {
   ];
 
   return (
-    <div className="fixed inset-x-4 bottom-4 z-40 md:hidden">
+    <div className="mobile-action-bar fixed inset-x-4 bottom-4 z-40 md:hidden">
       <div className="flex items-center justify-between gap-2 rounded-2xl border border-[#EDE8DF]/80 bg-white/90 p-2 shadow-[0_12px_40px_rgba(120,90,60,0.14)] backdrop-blur-xl">
         {actions.map(({ id, icon: Icon, label, onClick, href, primary }) => {
           const className = [

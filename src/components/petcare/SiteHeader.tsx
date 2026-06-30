@@ -24,7 +24,7 @@ export function ScrollProgress() {
   }, []);
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent">
+    <div className="scroll-progress fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent">
       <div
         className="h-full origin-left bg-gradient-to-r from-[#6B9B7A] to-[#3D6B4F] transition-transform duration-150 ease-out"
         style={{ transform: `scaleX(${progress / 100})` }}
