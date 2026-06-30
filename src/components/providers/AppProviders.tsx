@@ -7,13 +7,21 @@ import { PortfolioEmbedBridge } from "./PortfolioEmbedBridge";
 
 interface AppProvidersProps {
   children: ReactNode;
-  /** Pass language from portfolio site to keep i18n in sync */
-  language?: Language;
+  /** Sync from portfolio parent via postMessage */
+  portfolioLanguage?: Language;
+  defaultLanguage?: Language;
 }
 
-export function AppProviders({ children, language }: AppProvidersProps) {
+export function AppProviders({
+  children,
+  portfolioLanguage,
+  defaultLanguage,
+}: AppProvidersProps) {
   return (
-    <LanguageProvider externalLanguage={language}>
+    <LanguageProvider
+      portfolioLanguage={portfolioLanguage}
+      defaultLanguage={defaultLanguage}
+    >
       <PortfolioEmbedBridge />
       {children}
     </LanguageProvider>

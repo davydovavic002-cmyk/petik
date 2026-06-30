@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { syncLanguageToUrl } from "@/lib/embed/url";
 import { t, type TranslationKey } from "./translations";
 import type { Language } from "./types";
 
@@ -25,40 +26,49 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 interface LanguageProviderProps {
   children: ReactNode;
-  externalLanguage?: Language;
+  /** Sync from portfolio parent via postMessage */
+  portfolioLanguage?: Language;
   defaultLanguage?: Language;
 }
 
 export function LanguageProvider({
   children,
-  externalLanguage,
-  defaultLanguage = "ru",
+  portfolioLanguage,
+  defaultLanguage,
 }: LanguageProviderProps) {
-  const [internalLanguage, setInternalLanguage] = useState<Language>(defaultLanguage);
+  const [internalLanguage, setInternalLanguage] = useState<Language>(
+    defaultLanguage ?? "ru",
+  );
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!externalLanguage) {
+    if (defaultLanguage !== undefined) {
+      setInternalLanguage(defaultLanguage);
+    } else {
       const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
       if (stored) setInternalLanguage(stored);
     }
     setMounted(true);
-  }, [externalLanguage]);
-
-  const language = externalLanguage ?? internalLanguage;
+  }, [defaultLanguage]);
 
   useEffect(() => {
-    if (!mounted || externalLanguage) return;
-    localStorage.setItem(STORAGE_KEY, internalLanguage);
-    document.documentElement.lang = language;
-  }, [mounted, externalLanguage, internalLanguage, language]);
+    if (portfolioLanguage) {
+      setInternalLanguage(portfolioLanguage);
+    }
+  }, [portfolioLanguage]);
 
-  const setLanguage = useCallback(
-    (next: Language) => {
-      if (!externalLanguage) setInternalLanguage(next);
-    },
-    [externalLanguage],
-  );
+  const language = internalLanguage;
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem(STORAGE_KEY, internalLanguage);
+    document.documentElement.lang = internalLanguage;
+  }, [mounted, internalLanguage]);
+
+  const setLanguage = useCallback((next: Language) => {
+    setInternalLanguage(next);
+    syncLanguageToUrl(next);
+  }, []);
 
   const translate = useCallback(
     (key: TranslationKey, params?: Record<string, string | number>) =>

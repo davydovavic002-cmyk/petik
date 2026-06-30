@@ -35,7 +35,9 @@ export function PortfolioLanguageBridge({ children }: PortfolioLanguageBridgePro
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
-  const language = messageLanguage ?? urlLanguage;
-
-  return <AppProviders language={language}>{children}</AppProviders>;
+  return (
+    <AppProviders portfolioLanguage={messageLanguage} defaultLanguage={urlLanguage}>
+      {children}
+    </AppProviders>
+  );
 }
