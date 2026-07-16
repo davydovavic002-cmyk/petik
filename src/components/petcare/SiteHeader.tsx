@@ -23,7 +23,7 @@ export function ScrollProgress() {
   }, []);
 
   return (
-    <div className="scroll-progress fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent">
+    <div className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[60] h-0.5 bg-transparent">
       <div
         className="h-full origin-left bg-gradient-to-r from-[#6B9B7A] to-[#3D6B4F] transition-transform duration-150 ease-out"
         style={{ transform: `scaleX(${progress / 100})` }}
@@ -74,7 +74,7 @@ export function SiteHeader() {
   return (
     <header
       className={[
-        "sticky top-0 z-40 transition-all duration-300",
+        "sticky top-0 z-50 isolate transition-all duration-300",
         scrolled
           ? "border-b border-[#EDE8DF]/80 bg-[#F5F1EB]/85 shadow-[0_4px_24px_rgba(120,90,60,0.06)] backdrop-blur-xl"
           : "bg-transparent",
@@ -84,7 +84,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="btn-ghost rounded-xl px-1 py-1"
+          className="btn-ghost shrink-0 rounded-xl px-1 py-1"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#3D6B4F] text-white shadow-sm transition-shadow hover:shadow-md">
             <PawPrint className="h-4 w-4" />
@@ -94,7 +94,10 @@ export function SiteHeader() {
           </span>
         </button>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+        <nav
+          className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto md:flex"
+          aria-label="Main"
+        >
           {BENTO_SECTIONS.map((section) => (
             <button
               key={section.id}
@@ -109,7 +112,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             onClick={() => scrollToCell("appointment")}

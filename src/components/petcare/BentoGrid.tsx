@@ -11,17 +11,20 @@ import { QuickAccessStrip } from "./QuickAccessStrip";
 function SectionHeader({
   sectionId,
   isFirst,
+  anchorId,
 }: {
   sectionId: BentoSectionId;
   isFirst: boolean;
+  anchorId: string;
 }) {
   const { translate } = useLanguage();
   const section = BENTO_SECTIONS.find((s) => s.id === sectionId)!;
 
   return (
     <div
+      id={anchorId}
       className={[
-        "col-span-1 flex items-end justify-between gap-4 md:col-span-6 lg:col-span-12",
+        "col-span-1 flex items-end justify-between gap-4 scroll-mt-28 md:col-span-6 lg:col-span-12",
         isFirst ? "pt-0" : "mt-4 border-t border-[#EDE8DF]/70 pt-6 md:mt-5 md:pt-7",
       ].join(" ")}
     >
@@ -57,12 +60,12 @@ export function BentoGrid() {
           const cells = getCellsBySection(section.id);
 
           return (
-            <section
-              key={section.id}
-              id={`section-${section.id}`}
-              className="contents scroll-mt-28"
-            >
-              <SectionHeader sectionId={section.id} isFirst={index === 0} />
+            <section key={section.id} className="contents">
+              <SectionHeader
+                sectionId={section.id}
+                isFirst={index === 0}
+                anchorId={`section-${section.id}`}
+              />
               {cells.map((cell) => {
                 const Component = cell.component;
                 return (
