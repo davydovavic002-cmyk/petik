@@ -6,7 +6,6 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useBento } from "@/lib/bento/BentoContext";
 import { BENTO_SECTIONS } from "@/lib/bento/layout";
 import type { BentoSectionId } from "@/lib/bento/layout";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -118,7 +117,6 @@ export function SiteHeader() {
           >
             {translate("navBookCta")}
           </button>
-          <LanguageSwitcher />
         </div>
       </div>
     </header>

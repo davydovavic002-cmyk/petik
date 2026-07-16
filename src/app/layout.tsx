@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import { PortfolioLanguageBridge } from "@/components/providers/PortfolioLanguageBridge";
+import { AppProviders } from "@/components/providers/AppProviders";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PetCare AI — Ветеринарная клиника будущего",
+  title: "PetCare AI — Veterinary Clinic of the Future",
   description:
-    "Интерактивный интерфейс ветеринарной клиники с ИИ-ассистентом, онлайн-записью и мониторингом здоровья питомца.",
+    "Interactive veterinary clinic interface with AI assistant, online booking, and pet health monitoring.",
 };
 
 const portfolioEmbedScript = `(function(){var p=new URLSearchParams(location.search);if(p.get('embed')==='portfolio'){document.documentElement.setAttribute('data-embed','portfolio');}})();`;
@@ -33,7 +32,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="ru"
+      lang="en"
       {...(isPortfolioEmbed ? { "data-embed": "portfolio" } : {})}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
@@ -42,9 +41,7 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: portfolioEmbedScript }} />
       </head>
       <body className="min-h-full font-sans">
-        <Suspense fallback={null}>
-          <PortfolioLanguageBridge>{children}</PortfolioLanguageBridge>
-        </Suspense>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

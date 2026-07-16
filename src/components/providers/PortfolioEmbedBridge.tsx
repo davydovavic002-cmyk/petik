@@ -7,11 +7,9 @@ import {
   reportHeight,
   scheduleHeightReports,
 } from "@/embed/portfolioEmbed";
-import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function PortfolioEmbedBridge() {
   const pathname = usePathname();
-  const { language } = useLanguage();
 
   useEffect(() => {
     if (!isPortfolioEmbed()) return;
@@ -27,7 +25,7 @@ export function PortfolioEmbedBridge() {
   useEffect(() => {
     if (!isPortfolioEmbed()) return;
     scheduleHeightReports();
-  }, [pathname, language]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!isPortfolioEmbed()) return;
